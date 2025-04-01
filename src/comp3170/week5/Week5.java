@@ -16,6 +16,8 @@ public class Week5 implements IWindowListener {
 
 	private Window window;
 
+	private long oldTime;
+
 	final private File DIRECTORY = new File("src/comp3170/week5/shaders");
 
 	private Scene scene;
@@ -28,6 +30,7 @@ public class Week5 implements IWindowListener {
 		window = new Window("Week 5 prac", width, height, this);
 		window.setResizable(true);
 		window.run();
+		oldTime = System.currentTimeMillis();
 	}
 
 	@Override
@@ -40,6 +43,7 @@ public class Week5 implements IWindowListener {
 
 		glClearColor(0.0f, 0.14f, 0.27f, 1.0f); // MILLENIUM BLUE
 
+		
 	}
 
 	@Override
@@ -48,9 +52,16 @@ public class Week5 implements IWindowListener {
 	 */
 	public void draw() {
 		glClear(GL_COLOR_BUFFER_BIT);
+		update();
 		scene.draw(); // Draw the scene, which will draw all its children.
 	}
-
+	
+	public void update(){
+		long time = System.currentTimeMillis();
+		float deltaTime = (time - oldTime) / 1000f;
+		oldTime = time;
+		scene.update(deltaTime);
+	}
 	@Override
 	/**
 	 * Called when the window is resized
